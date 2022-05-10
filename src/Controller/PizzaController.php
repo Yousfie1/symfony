@@ -14,7 +14,7 @@ class PizzaController extends  AbstractController
      */
     public function homepage()
     {
-        $cats=['vis','vega','vlees','fiets','dag'];
+        $cats=['vis','vegetarisch','vlees','fiets','dag'];
 
         return $this->render('pizza/pizza.html.twig',['cats'=>$cats]);
     }
@@ -28,6 +28,19 @@ class PizzaController extends  AbstractController
         //dd($cats);
 
         return $this->render('pizza/category.html.twig',['cats'=>$cats]);
+    }
+
+    /**
+     * @Route("/categories/{id}", name="pizza_categories")
+     */
+    public function categories($id,EntityManagerInterface $em)
+    {
+
+        $category=$em->getRepository(Category::class)->find($id);
+        $pizzas=$category->getPizzas();
+        //dd($category);
+
+        return $this->render('pizza/pizzas.html.twig',['pizzas'=>$pizzas]);
     }
 
 }

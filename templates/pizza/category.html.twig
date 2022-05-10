@@ -15,9 +15,9 @@
                 <div class="col-sm-3">
                     <div class="card">
                         <div class="card-body text-center">
-                            {#                        <a href="{{ path('pizza_categories') }}">#}
+                                                   <a href="{{ path('pizza_categories', {id: cat.id})  }}">
                             <img alt="no picture" class="product-img img-fluid center-block" src="{{ asset(cat.image) }}">
-                            {#                        </a>#}
+                                                  </a>
                             <div class="card-title mb-3">{{ cat.name }}</div>
                         </div>
                     </div>
