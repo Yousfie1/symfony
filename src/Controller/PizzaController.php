@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -41,6 +42,15 @@ class PizzaController extends  AbstractController
         //dd($category);
 
         return $this->render('pizza/pizzas.html.twig',['pizzas'=>$pizzas]);
+    }
+    /**
+     * @Route("/order/{id}", name="app_order");
+     */
+
+    public function order(Request $request, Pizza $pizza, ManagerRegistry $managerRegistry)
+    {
+        $pizzaName = $pizza->getName();
+        $en
     }
 
 }

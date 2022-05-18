@@ -5,10 +5,10 @@
     <header>
         <h1 class="display-4">Pizza Winkel</h1>
     </header>
-    <img src="{{ asset('pizzabanner.jpg')}}" class="img-fluid"  width="1500 px" alt="...">
+    <img src="{{ asset('img/pizzabanner.jpg')}}" class="img-fluid"  width="1500 px" alt="...">
     <div>aantal is  {{ cats|length }} </div>
 
-    h1
+
 
     <div class="row gy-3">
         {% for cat in cats %}
@@ -24,13 +24,5 @@
             </div>
         {% endfor %}
     </div>
-{#    <div class="row">#}
-{#        {% for cat in cats %}#}
-{#            <div class="col-3">#}
-{#                <li>{{ cat }}</li>#}
-{#            </div>#}
-{#        {% endfor %}#}
-{#    </div>#}
-
 </div>
 {% endblock %}
