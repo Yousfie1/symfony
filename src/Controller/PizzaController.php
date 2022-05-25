@@ -3,12 +3,20 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Order;
+
+use App\Entity\Pizza;
+use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Doctrine\ManagerRegistry;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-class PizzaController extends  AbstractController
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+
+class PizzaController extends AbstractController
 {
     /**
      * @Route("/pizza")
@@ -21,7 +29,7 @@ class PizzaController extends  AbstractController
     }
 
     /**
-     * @Route("/category")
+     * @Route("/")
      */
     public function category(EntityManagerInterface $em)
     {
@@ -46,11 +54,52 @@ class PizzaController extends  AbstractController
     /**
      * @Route("/order/{id}", name="app_order");
      */
-
-    public function order(Request $request, Pizza $pizza, ManagerRegistry $managerRegistry)
+    public function order(Request $request, Pizza $pizza, OrderRepository $orderRepository)
     {
-        $pizzaName = $pizza->getName();
-        $en
+
+        $order = new Order();
+        $order->setStatus("in progress");
+        $order->setPizza($pizza);
+        $form = $this->createFormBuilder($order)
+       #    ->add('size', EntityType::class , [
+       #         'class'=> Size::class,
+       #         'choice_label'=> function(Size $size){
+       #         return $size->getName();
+       #         }
+       #     ])
+            ->add('fname' , TextType::class , ['label'=>'Voornaam'])
+            ->add('sname' , TextType::class , ['label'=>'Achternaam'])
+            ->add('address' , TextType::class , ['label'=>'Adres'])
+            ->add('zipcode' , TextType::class , ['label'=>'Postcode'])
+            ->add('email' , TextType::class , ['label'=>'Email adres'])
+            ->add('save' , SubmitType::class , ['label'=>'Bestellen'])
+            ->getForm();
+
+
+
+               $form->handleRequest($request);
+
+               if($form->isSubmitted()){
+                  $order = $form->getData();
+                  $orderRepository->add($order);
+                return $this->redirectToRoute('app_overview');
+
+               }
+
+              return $this->renderForm('form/form.html.twig', [
+                            'form' => $form,
+                        ]);
+    }
+
+    /**
+     * @Route("/overview" , name="app_overview")
+     */
+    public function overview(OrderRepository $orderRepository){
+        $orders = $orderRepository->findAll();
+        return $this->render('pizza/overzicht.html.twig',
+        [
+            'orders' => $orders
+        ]);
     }
 
 }
