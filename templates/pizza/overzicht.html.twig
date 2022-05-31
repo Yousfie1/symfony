@@ -23,23 +23,17 @@
         <th scope="col">#</th>
         <th scope="col">First</th>
         <th scope="col">Last</th>
-        <th scope="col">Handle</th>
+        <th scope="col">Pizza</th>
     </tr>
     </thead>
     <tbody>
-    {% for order in orders %}#}
+    {% for order in orders %}
     <tr>
-        <th scope="row">1</th>
+        <th>{{ order.id }}</th>
         <td>{{ order.fname }}</td>
+        <td>{{ order.sname }}</td>
+        <td>{{ order.pizza.name }}</td>
     </tr>
-    <tr>
-        <th scope="row">2</th>
-        <td>{{ order.address }}</td>
-    </tr>
-    <tr>
-        <th scope="row">3</th>
-        <td>{{ order.email}}</td>
-    </tr>
+    {% endfor %}
     </tbody>
 </table>
-{% endfor %}

@@ -58,7 +58,7 @@ class PizzaController extends AbstractController
     {
 
         $order = new Order();
-        $order->setStatus("in progress");
+        $order->setSetStatus("in progress");
         $order->setPizza($pizza);
         $form = $this->createFormBuilder($order)
        #    ->add('size', EntityType::class , [
